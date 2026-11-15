@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#102a43">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="112">
+<meta name="format-detection" content="telephone=no">
+<title>112 anrufen</title>
+<style>
+:root{--navy:#102a43;--blue:#1769aa;--blue2:#eaf4ff;--red:#d92d3a;--red2:#fff0f1;--green:#16804a;--ink:#172b4d;--muted:#60758a;--line:#d9e4ee;--card:#fff;--shadow:0 8px 24px rgba(16,42,67,.08);--r:18px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:linear-gradient(180deg,#eaf3fc 0,#f5f8fc 320px) #f5f8fc;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,system-ui,"Segoe UI",Arial,sans-serif;color:var(--ink);line-height:1.45;padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+.topbar{background:var(--navy);color:#fff;padding:calc(12px + env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 12px max(16px,env(safe-area-inset-left));display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.mark{width:40px;height:40px;flex:0 0 40px;border-radius:12px;background:#fff;color:var(--red);display:grid;place-items:center;font-weight:900;font-size:18px}
+.brand h1{font-size:18px;margin:0;line-height:1.1}.brand p{margin:3px 0 0;color:#cfe2f3;font-size:12px}
+.lang{display:flex;background:#1b3a56;border:1px solid #47627a;border-radius:999px;padding:3px;flex:0 0 auto}
+.lang button{border:0;background:transparent;color:#cfe2f3;padding:8px 14px;border-radius:999px;font-weight:700;min-height:36px}
+.lang button.on{background:#fff;color:var(--navy)}
+.wrap{max-width:1100px;margin:0 auto;padding:16px max(12px,env(safe-area-inset-right)) 24px max(12px,env(safe-area-inset-left))}
+.em{background:linear-gradient(115deg,#c91f31,#f04452);border-radius:var(--r);padding:16px 18px;color:#fff;display:flex;align-items:center;gap:14px;box-shadow:0 10px 22px #d92d3a25}
+.em h2{margin:0;font-size:clamp(19px,5vw,28px)}.em p{margin:4px 0 0;font-size:14px}
+.em a{margin-left:auto;background:#fff;color:var(--red);font-size:26px;font-weight:900;padding:10px 18px;border-radius:14px;text-decoration:none;text-align:center;line-height:1.1;white-space:nowrap}
+.em a small{display:block;font-size:11px;font-weight:600}
+.warn{margin:12px 0 18px;border:1px solid #ffc5ca;background:#fff5f5;border-radius:14px;padding:12px 14px;color:#8d1c27;font-size:14px}
+.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr);gap:16px;align-items:start}
+.stack{display:grid;gap:16px}
+.panel{background:var(--card);border:1px solid #e4ebf2;border-radius:var(--r);box-shadow:var(--shadow);padding:18px}
+.panel h2{margin:0 0 4px;font-size:20px}.sub{margin:0 0 14px;color:var(--muted);font-size:14px}
+.sym{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.s{min-height:100px;border:1px solid var(--line);border-radius:14px;background:#fff;padding:11px 9px;text-align:left}
+.s:active{background:#f3f8fd}
+.s[aria-pressed=true]{border:2px solid var(--red);background:var(--red2);padding:10px 8px}
+.s.urg::after{content:"112";position:absolute;top:6px;right:8px;font-size:10px;font-weight:900;color:#fff;background:var(--red);border-radius:6px;padding:1px 5px}
+.s{position:relative}
+.s .e{font-size:26px;display:block;margin-bottom:6px}.s b{display:block;font-size:14px;line-height:1.2}.s small{display:block;color:var(--muted);margin-top:4px;font-size:12px}
+label.fl{display:block;font-weight:700;font-size:13px;margin:0 0 5px}
+input,textarea,select{width:100%;border:1px solid #cdd9e4;background:#fff;border-radius:12px;padding:12px;font-size:16px;outline:none;min-height:46px;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,#60758a 50%),linear-gradient(135deg,#60758a 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:34px}
+input:focus,textarea:focus,select:focus{border-color:#4394d4;box-shadow:0 0 0 3px #4394d425}
+textarea{min-height:76px;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.f{margin-bottom:12px}
+.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:800;min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.b1{background:var(--navy);color:#fff}.b2{background:var(--blue2);color:#15558a}.b3{background:var(--red);color:#fff}
+.row{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}.row .btn{flex:1 1 140px}
+.detail{margin-top:16px;border-radius:14px;border:1px solid #f5b9bf;background:linear-gradient(130deg,#fff6f6,#fff);overflow:hidden}
+.dh{padding:14px;border-bottom:1px solid #f5d7da;display:flex;gap:12px;align-items:center}.dh .big{font-size:30px}.dh h3{margin:0;font-size:17px}.dh p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.tag{margin-left:auto;color:#c91f31;font-size:12px;font-weight:900;white-space:nowrap}
+.db{padding:14px}.db h4{margin:0 0 8px;font-size:14px}.db ul{padding-left:19px;margin:0 0 12px}.db li{margin:5px 0;font-size:14px}
+.ph{background:#fff;border:1px solid #f1dfe1;border-radius:12px;padding:11px;margin:8px 0}
+.de{font-weight:700;color:#14395c}.ru{color:var(--muted);font-size:13px;margin-top:3px}
+.chk{display:grid;gap:4px}
+.chk label{display:flex;gap:12px;align-items:center;font-size:15px;min-height:44px}
+.chk input{width:22px;height:22px;min-height:0;flex:0 0 22px;accent-color:var(--green);-webkit-appearance:auto;appearance:auto}
+.green{border-color:#ccebd8}.green h2{color:var(--green)}
+.note{font-size:12px;color:var(--muted);margin-top:12px}
+.nums{display:grid;gap:8px}
+.nums a{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:52px}
+.nums a b{font-size:18px;color:var(--blue);min-width:92px}.nums a span{font-size:13px;color:var(--muted)}
+.q{border-top:1px solid #e8eef4;padding:9px 0;font-size:14px}.q:first-of-type{border-top:0}
+.q .de{font-size:14px}
+details{margin-top:4px}summary{font-weight:700;min-height:44px;display:flex;align-items:center;cursor:pointer}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:10px max(12px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
+.bar a{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--red);color:#fff;font-weight:900;font-size:20px;text-decoration:none;border-radius:16px;min-height:56px;box-shadow:0 6px 16px #d92d3a40}
+.toast{position:fixed;bottom:calc(88px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#102a43;color:#fff;padding:10px 16px;border-radius:999px;display:none;z-index:30;font-size:14px;white-space:nowrap}
+footer{text-align:center;color:#708397;font-size:12px;padding:18px 10px}
+@media(max-width:860px){.layout{grid-template-columns:1fr}}
+@media(max-width:540px){.sym{grid-template-columns:repeat(2,minmax(0,1fr))}.g2{grid-template-columns:1fr}.em{flex-wrap:wrap}.em a{margin-left:0;width:100%}.brand p{display:none}.panel{padding:15px}}
+@media(max-width:360px){.g2.keep{grid-template-columns:1fr}}
+@media print{body{background:#fff;padding:0}.bar,.lang,.btn,.toast,.em a{display:none!important}.topbar{background:#fff;color:#000;padding:0 0 10px}.layout{grid-template-columns:1fr 1fr}.panel{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="mark">112</div><div><h1 data-i="appName"></h1><p data-i="tagline"></p></div></div>
+  <div class="lang" role="group" aria-label="Sprache / Язык"><button type="button" id="lde">DE</button><button type="button" id="lru">RU</button></div>
+</header>
+
+<main class="wrap">
+  <section class="em">
+    <div style="font-size:30px">☎</div>
+    <div><h2 data-i="emTitle"></h2><p data-i="emText"></p></div>
+    <a href="tel:112" aria-label="112">112<small data-i="free"></small></a>
+  </section>
+  <div class="warn" data-i="warn" data-html></div>
+
+  <div class="layout">
+    <div class="stack">
+      <section class="panel">
+        <h2 data-i="chooseTitle"></h2>
+        <p class="sub" data-i="chooseSub"></p>
+        <div class="sym" id="sym"></div>
+        <div class="f" style="margin-top:14px"><label class="fl" for="other" data-i="otherLabel"></label><textarea id="other"></textarea></div>
+        <div class="detail" id="detail" aria-live="polite"></div>
+      </section>
+
+      <section class="panel">
+        <h2 data-i="callTitle"></h2>
+        <p class="sub" data-i="callSub"></p>
+        <div class="ph"><div class="de" id="sDe"></div><div class="ru" id="sRu"></div></div>
+        <div class="row">
+          <button class="btn b1" id="copy" type="button" data-i="copy"></button>
+          <button class="btn b2" id="share" type="button" data-i="share"></button>
+          <button class="btn b2" id="print" type="button" data-i="print"></button>
+        </div>
+        <p class="note" data-i="dispNote"></p>
+      </section>
+
+      <section class="panel">
+        <h2 data-i="qTitle"></h2>
+        <p class="sub" data-i="qSub"></p>
+        <div id="qs"></div>
+      </section>
+    </div>
+
+    <div class="stack">
+      <section class="panel">
+        <h2 data-i="pTitle"></h2>
+        <p class="sub" data-i="pSub"></p>
+        <div class="f"><label class="fl" for="address" data-i="address"></label><input id="address" autocomplete="street-address" enterkeyhint="next"></div>
+        <button class="btn b2" id="gps" type="button" style="width:100%;margin-bottom:12px" data-i="gps"></button>
+        <div class="g2">
+          <div class="f"><label class="fl" for="floor" data-i="floor"></label><input id="floor" enterkeyhint="next"></div>
+          <div class="f"><label class="fl" for="phone" data-i="phone"></label><input id="phone" type="tel" autocomplete="tel" enterkeyhint="next"></div>
+        </div>
+        <div class="g2">
+          <div class="f"><label class="fl" for="caller" data-i="caller"></label><input id="caller" autocomplete="given-name" enterkeyhint="next"></div>
+          <div class="f"><label class="fl" for="pname" data-i="pname"></label><input id="pname" enterkeyhint="next"></div>
+        </div>
+        <div class="g2">
+          <div class="f"><label class="fl" for="sex" data-i="sex"></label>
+            <select id="sex"><option value="n" data-i="sexN"></option><option value="f" data-i="sexF"></option><option value="m" data-i="sexM"></option></select></div>
+          <div class="f"><label class="fl" for="age" data-i="age"></label><input id="age" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next"></div>
+        </div>
+        <div class="g2">
+          <div class="f"><label class="fl" for="since" data-i="since"></label><input id="since" enterkeyhint="next"></div>
+          <div class="f"><label class="fl" for="birth" data-i="birth"></label><input id="birth" inputmode="numeric" placeholder="TT.MM.JJJJ" enterkeyhint="next"></div>
+        </div>
+        <div class="f"><label class="fl" for="meds" data-i="meds"></label><textarea id="meds"></textarea></div>
+        <div class="chk"><label><input type="checkbox" id="remember"><span data-i="remember"></span></label></div>
+        <button class="btn b2" id="clear" type="button" style="width:100%;margin-top:8px" data-i="clear"></button>
+        <p class="note" data-i="privacy"></p>
+      </section>
+
+      <section class="panel green">
+        <h2 data-i="takeTitle"></h2>
+        <p class="sub" data-i="takeSub"></p>
+        <div class="chk" id="chk"></div>
+        <p class="note" data-i="moneyNote"></p>
+      </section>
+
+      <section class="panel">
+        <h2 data-i="numTitle"></h2>
+        <div class="nums">
+          <a href="tel:112"><b>112</b><span data-i="n112"></span></a>
+          <a href="tel:110"><b>110</b><span data-i="n110"></span></a>
+          <a href="tel:116117"><b>116 117</b><span data-i="n116"></span></a>
+          <a href="tel:076119240"><b>0761 19240</b><span data-i="nGift"></span></a>
+        </div>
+      </section>
+    </div>
+  </div>
+  <footer data-i="foot"></footer>
+</main>
+
+<div class="bar"><a href="tel:112" aria-label="112">☎ <span data-i="barCall"></span></a></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const UI={
+ de:{appName:'112 anrufen',tagline:'Schnell und richtig Hilfe holen',emTitle:'Notruf — Rettungsdienst',emText:'Bei akuter Gefahr sofort anrufen.',free:'kostenlos',
+  warn:'<strong>Wichtig:</strong> Bei Brustschmerzen, Atemnot, Bewusstlosigkeit, Schlaganfallzeichen, starker Blutung oder anderer akuter Gefahr <strong>sofort 112 anrufen</strong>. Nicht erst die App ausfüllen oder Dokumente suchen.',
+  chooseTitle:'Was ist passiert oder was tut weh?',chooseSub:'Option wählen – die App bereitet Sätze für die Leitstelle vor. Das ist keine Diagnose.',otherLabel:'Weitere Symptome',
+  callTitle:'Kurzer Notruf-Leitfaden',callSub:'Vorlesen am Telefon',dispNote:'Beantworten Sie die Fragen der Leitstelle und legen Sie erst auf, wenn sie es sagt. Folgen Sie den Anweisungen.',
+  copy:'📋 Kopieren',share:'↗ Teilen',print:'🖨 Drucken',qTitle:'Das fragt die Leitstelle',qSub:'Typische Fragen – mit Antwortsatz',
+  pTitle:'Angaben',pSub:'Nur ausfüllen, wenn bekannt',address:'Notfalladresse (Straße, Nr., PLZ, Ort)',gps:'📍 Standort ermitteln',floor:'Stockwerk',phone:'Rückrufnummer',caller:'Anrufer (Name)',pname:'Name der Person',sex:'Person ist',sexN:'neutral',sexF:'weiblich',sexM:'männlich',age:'Alter',since:'Seit wann? (z. B. 30 Minuten)',birth:'Geburtsdatum',meds:'Medikamente, Allergien, Vorerkrankungen',
+  remember:'Auf diesem Gerät merken',clear:'Alle Felder leeren',privacy:'Die Angaben bleiben auf diesem Gerät und werden nirgends hin gesendet. Nur wenn Sie „merken“ aktivieren, werden sie lokal gespeichert.',
+  takeTitle:'Bereithalten',takeSub:'Nur wenn griffbereit',moneyNote:'Geld und Bankkarte sind für den Notruf nicht nötig. Den Anruf nicht wegen Gegenständen verzögern.',
+  numTitle:'Weitere Nummern',n112:'Notruf: Rettungsdienst & Feuerwehr',n110:'Polizei',n116:'Ärztlicher Bereitschaftsdienst (nicht lebensbedrohlich)',nGift:'Giftinformationszentrum Freiburg',
+  barCall:'112 anrufen',foot:'112 anrufen · Hilfe zur Vorbereitung · Ersetzt keine Notfallhilfe oder medizinische Beurteilung.',
+  hdrSay:'Das sagen',hdrPhr:'Sätze für die Leitstelle',urgent:'SOFORT 112',
+  copied:'Kopiert',shared:'Geteilt',cleared:'Geleert',gpsWait:'Standort wird ermittelt …',gpsFail:'Standort nicht verfügbar',gpsOk:'Koordinaten eingetragen – Straße zusätzlich nennen',noShare:'Teilen nicht möglich – kopiert',
+  hi:'Guten Tag, ',n:'Ich rufe wegen eines Notfalls an.',need:'Ich brauche einen Rettungswagen.',lowDe:'Ich spreche nur wenig Deutsch. Bitte sprechen Sie langsam.',
+  chk:['Krankenversicherungskarte','Ausweis','Medikamentenliste','Telefon und genaue Adresse','Allergien / wichtige Diagnosen'],
+  Q:[['Wo ist der Notfall? (Adresse, Ort, Stockwerk)','Die Adresse ist {addr}.'],['Was ist passiert?','{what}'],['Wie viele Personen sind betroffen?','Es ist eine Person betroffen.'],['Welche Verletzungen / Beschwerden?','{what}'],['Ist die Person ansprechbar? Atmet sie?','Bitte kurz prüfen und ehrlich antworten.'],['Warten auf Rückfragen!','Ich bleibe am Telefon.']]},
+ ru:{appName:'112 — вызов помощи',tagline:'Быстро и правильно вызвать помощь',emTitle:'Экстренный вызов — скорая помощь',emText:'При непосредственной опасности звоните сразу.',free:'бесплатно',
+  warn:'<strong>Важно:</strong> при боли в груди, затруднённом дыхании, потере сознания, признаках инсульта, сильном кровотечении или другой опасности <strong>немедленно звоните 112</strong>. Не заполняйте приложение и не ищите документы.',
+  chooseTitle:'Что случилось или что болит?',chooseSub:'Выберите вариант — приложение подготовит фразы для диспетчера. Это не диагноз.',otherLabel:'Другие симптомы',
+  callTitle:'Короткий сценарий звонка',callSub:'Можно читать вслух по телефону',dispNote:'Отвечайте на вопросы диспетчера и не кладите трубку, пока он не скажет. Следуйте его инструкциям.',
+  copy:'📋 Копировать',share:'↗ Поделиться',print:'🖨 Печать',qTitle:'Что спросит диспетчер',qSub:'Типичные вопросы — с готовым ответом',
+  pTitle:'Данные',pSub:'Заполните, если знаете',address:'Адрес (улица, дом, индекс, город)',gps:'📍 Определить местоположение',floor:'Этаж',phone:'Ваш телефон',caller:'Кто звонит (имя)',pname:'Имя пострадавшего',sex:'Пострадавший',sexN:'не указан',sexF:'женщина',sexM:'мужчина',age:'Возраст',since:'Как давно? (напр. 30 минут)',birth:'Дата рождения',meds:'Лекарства, аллергии, болезни',
+  remember:'Запомнить на этом устройстве',clear:'Очистить все поля',privacy:'Данные остаются на этом устройстве и никуда не отправляются. Сохраняются локально только если включено «Запомнить».',
+  takeTitle:'Что подготовить',takeSub:'Только если под рукой',moneyNote:'Деньги и банковская карта для вызова не нужны. Не задерживайте звонок ради вещей.',
+  numTitle:'Другие номера',n112:'Экстренный: скорая и пожарные',n110:'Полиция',n116:'Врачебная дежурная служба (не угрожает жизни)',nGift:'Центр информации по отравлениям, Фрайбург',
+  barCall:'Позвонить 112',foot:'112 · Помощь в подготовке · Не заменяет экстренную помощь или медицинскую оценку.',
+  hdrSay:'Что сообщить',hdrPhr:'Фразы для диспетчера',urgent:'СРАЗУ 112',
+  copied:'Скопировано',shared:'Отправлено',cleared:'Очищено',gpsWait:'Определяю местоположение …',gpsFail:'Местоположение недоступно',gpsOk:'Координаты вписаны — назовите ещё и улицу',noShare:'Не удалось поделиться — скопировано',
+  hi:'Здравствуйте, ',n:'Я звоню по поводу экстренной ситуации.',need:'Нужна скорая помощь.',lowDe:'Я плохо говорю по-немецки. Говорите, пожалуйста, медленно.',
+  chk:['Карта медицинского страхования','Удостоверение личности','Список лекарств','Телефон и точный адрес','Аллергии / важные диагнозы'],
+  Q:[['Где происшествие? (адрес, город, этаж)','Адрес: {addr}.'],['Что случилось?','{what}'],['Сколько пострадавших?','Один пострадавший.'],['Какие травмы / жалобы?','{what}'],['Человек реагирует? Дышит?','Проверьте и отвечайте честно.'],['Ждите вопросов!','Я остаюсь на линии.']]}
+};
+/* P = Person (de), Pru */
+const D=[
+ {id:'chest',e:'❤️',u:1,de:'Brustschmerzen / Herz',ru:'Боль в груди / сердце',
+  dd:'Brustschmerzen können ein Notfall sein. Bei akuten oder starken Beschwerden sofort 112 anrufen.',dr:'Боль в груди может быть экстренным состоянием. При острой или сильной боли немедленно звоните 112.',
+  sd:['Wo genau tut es weh?','Seit wann?','Atemnot, Schweiß, Übelkeit erwähnen'],sr:['Где именно болит?','Как давно?','Сообщите об одышке, потливости, тошноте'],
+  p:[['{P} hat Brustschmerzen. Bitte schicken Sie sofort Hilfe.','{R}: боль в груди. Пожалуйста, срочно пришлите помощь.'],['Es gibt auch Atemnot / Schweiß / Übelkeit.','Также есть одышка / потливость / тошнота.']]},
+ {id:'breath',e:'🫁',u:1,de:'Atemnot / Probleme beim Atmen',ru:'Одышка / трудно дышать',
+  dd:'Atemnot ist ein möglicher Notfall. Sofort 112 anrufen.',dr:'Затруднённое дыхание может быть экстренным состоянием. Немедленно звоните 112.',
+  sd:['Kann die Person ganze Sätze sprechen?','Seit wann besteht die Atemnot?','Bekannte Allergie / Asthma erwähnen'],sr:['Может ли человек говорить целыми фразами?','Как давно одышка?','Сообщите об аллергии / астме'],
+  p:[['{P} bekommt schlecht Luft.','{R}: трудно дышать.'],['Die Atemnot hat vor {t} begonnen.','Одышка началась {t} назад.']]},
+ {id:'stroke',e:'⚡',u:1,de:'Möglicher Schlaganfall',ru:'Возможный инсульт',
+  dd:'Plötzliche Gesichtslähmung, Armschwäche oder Sprachstörung: sofort 112, Beginn der Symptome merken.',dr:'Внезапная асимметрия лица, слабость руки или нарушение речи: немедленно 112, запомните время начала.',
+  sd:['Wann war die Person zuletzt symptomfrei?','Gesicht, Arm, Sprache beschreiben','Sofort 112 anrufen'],sr:['Когда человек в последний раз был здоров?','Опишите лицо, руку, речь','Сразу звоните 112'],
+  p:[['Ich vermute einen Schlaganfall. Die Symptome haben vor {t} begonnen.','Я подозреваю инсульт. Симптомы начались {t} назад.'],['{P} spricht undeutlich, ein Arm ist schwach oder das Gesicht hängt.','{R}: невнятная речь, слабость в руке или перекошено лицо.']]},
+ {id:'uncon',e:'🆘',u:1,de:'Bewusstlosigkeit / reagiert nicht',ru:'Без сознания / не реагирует',
+  dd:'Sofort 112 anrufen. Atmung prüfen und den Anweisungen der Leitstelle folgen.',dr:'Немедленно звоните 112. Проверьте дыхание и следуйте инструкциям диспетчера.',
+  sd:['Ist die Person ansprechbar?','Atmet sie normal?','Leitstellen-Anweisungen befolgen'],sr:['Реагирует ли человек на обращение?','Дышит ли нормально?','Выполняйте инструкции диспетчера'],
+  p:[['{P} ist bewusstlos und reagiert nicht.','{R} без сознания и не реагирует.'],['Ich prüfe, ob normale Atmung vorhanden ist.','Я проверяю, есть ли нормальное дыхание.']]},
+ {id:'bleed',e:'🩸',u:1,de:'Starke Blutung',ru:'Сильное кровотечение',
+  dd:'Bei starker Blutung sofort 112 anrufen und den Anweisungen der Leitstelle folgen.',dr:'При сильном кровотечении немедленно звоните 112 и следуйте указаниям диспетчера.',
+  sd:['Wo ist die Blutung?','Ist die Person ansprechbar?','Druck auf die Wunde, wenn sicher möglich'],sr:['Где кровотечение?','Реагирует ли человек?','Давите на рану, если безопасно'],
+  p:[['{P} blutet stark. Die Blutung hört nicht auf.','{R}: сильное кровотечение, оно не останавливается.']]},
+ {id:'kidney',e:'🫘',de:'Nierenkolik / Flankenschmerz',ru:'Почечная колика / боль в боку',
+  dd:'Starke Schmerzen in der Flanke oder im Rücken; eventuell Übelkeit oder Erbrechen.',dr:'Сильная боль в боку или пояснице; иногда тошнота и рвота.',
+  sd:['Starke Schmerzen in Flanke / Rücken','Übelkeit oder Erbrechen','Beginn und Stärke beschreiben'],sr:['Сильная боль в боку / пояснице','Тошнота или рвота','Опишите начало и силу боли'],
+  p:[['{P} hat starke Schmerzen in der Flanke / im unteren Rücken.','{R}: сильная боль в боку / пояснице.'],['Übelkeit oder Erbrechen sind vorhanden.','Есть тошнота или рвота.'],['Die Schmerzen haben vor {t} begonnen.','Боль началась {t} назад.']]},
+ {id:'head',e:'🧠',de:'Migräne / starke Kopfschmerzen',ru:'Мигрень / сильная головная боль',
+  dd:'Starke Kopfschmerzen; eventuell Lichtempfindlichkeit, Übelkeit oder Sehstörungen.',dr:'Сильная головная боль; возможны светобоязнь, тошнота или нарушения зрения.',
+  sd:['Starke Kopfschmerzen','Übelkeit / Lichtempfindlichkeit','Lähmung, Sprach- oder Sehstörung sofort erwähnen'],sr:['Сильная головная боль','Тошнота / светобоязнь','Сразу сообщите о параличе, нарушении речи или зрения'],
+  p:[['{P} hat starke Kopfschmerzen.','{R}: сильная головная боль.'],['Es gibt Übelkeit und Lichtempfindlichkeit.','Есть тошнота и светобоязнь.'],['Die Schmerzen begannen vor {t}.','Боль началась {t} назад.']]},
+ {id:'belly',e:'🩺',de:'Bauchschmerzen',ru:'Боль в животе',
+  dd:'Genaue Stelle, Beginn und weitere Symptome angeben.',dr:'Опишите место боли, начало и другие симптомы.',
+  sd:['Wo genau tut es weh?','Seit wann?','Fieber, Erbrechen oder Blut erwähnen'],sr:['Где именно болит?','Как давно?','Сообщите о температуре, рвоте или крови'],
+  p:[['{P} hat starke Bauchschmerzen.','{R}: сильная боль в животе.'],['Die Schmerzen haben vor {t} begonnen.','Боль началась {t} назад.'],['Es gibt auch Fieber / Erbrechen.','Также есть температура / рвота.']]},
+ {id:'fever',e:'🌡️',de:'Fieber / hohes Fieber',ru:'Температура / сильный жар',
+  dd:'Temperatur und Begleitsymptome nennen.',dr:'Сообщите температуру и сопутствующие симптомы.',
+  sd:['Temperatur nennen, falls gemessen','Seit wann?','Verwirrtheit oder Atemnot sofort erwähnen'],sr:['Назовите температуру, если измеряли','Как давно?','Сразу сообщите о спутанности сознания или одышке'],
+  p:[['{P} hat hohes Fieber.','{R}: высокая температура.'],['Das Fieber besteht seit {t}.','Температура держится {t}.']]},
+ {id:'fall',e:'🩹',de:'Sturz / Verletzung',ru:'Падение / травма',
+  dd:'Sagen, wie es zum Sturz kam und welche Verletzungen sichtbar sind. Bei möglicher Wirbelsäulenverletzung die Person nicht bewegen.',dr:'Расскажите, как произошло падение и какие травмы видны. При возможной травме позвоночника не перемещайте человека.',
+  sd:['Wie ist der Sturz passiert?','Wo ist die Verletzung?','Bewusstsein und Blutung beschreiben'],sr:['Как произошло падение?','Где травма?','Опишите сознание и кровотечение'],
+  p:[['Es gab einen Sturz. {P} hat Schmerzen und ist verletzt.','Произошло падение. {R}: боль и травма.'],['Es gibt eine Kopfverletzung / Blutung.','Есть травма головы / кровотечение.']]},
+ {id:'other',e:'➕',de:'Andere Beschwerden',ru:'Другое',
+  dd:'Beschreiben Sie in einfachen Worten, was passiert ist und was Sie sehen.',dr:'Простыми словами опишите, что произошло и что вы видите.',
+  sd:['Was ist passiert?','Was sehen oder hören Sie?','Seit wann besteht das Problem?'],sr:['Что случилось?','Что вы видите или слышите?','Как давно?'],
+  p:[['Es geht um eine Person, der es nicht gut geht.','Речь о человеке, которому плохо.']]}
+];
+let sel='kidney',L='ru',STORE='notruf112.v2';
+const $=id=>document.getElementById(id),T=()=>UI[L];
+const FIELDS=['address','floor','phone','caller','pname','sex','age','since','birth','meds'];
+function pers(){const s=$('sex').value,n=$('pname').value.trim();
+ const de=s==='f'?'Die Patientin':s==='m'?'Der Patient':'Die Person',ru=s==='f'?'Пациентка':s==='m'?'Пациент':'Человек';
+ return{de:n?de+' '+n:de,ru:n?ru+' '+n:ru,t:$('since').value.trim()||'…'};}
+function fill(txt,isRu){const p=pers();return txt.replace(/\{P\}/g,p.de).replace(/\{R\}/g,p.ru).replace(/\{t\}/g,p.t);}
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function applyUI(){
+ const t=T();document.documentElement.lang=L;
+ document.querySelectorAll('[data-i]').forEach(el=>{const v=t[el.dataset.i];if(v===undefined)return;el.hasAttribute('data-html')?el.innerHTML=v:el.textContent=v;});
+ $('lde').classList.toggle('on',L==='de');$('lru').classList.toggle('on',L==='ru');
+ $('chk').innerHTML=t.chk.map(x=>`<label><input type="checkbox"><span>${x}</span></label>`).join('');
+ render();
+}
+function renderSym(){
+ $('sym').innerHTML=D.map(d=>`<button type="button" class="s${d.u?' urg':''}" data-id="${d.id}" aria-pressed="${d.id===sel}"><span class="e">${d.e}</span><b>${L==='ru'?d.ru:d.de}</b><small>${L==='ru'?d.de:d.ru}</small></button>`).join('');
+ $('sym').querySelectorAll('.s').forEach(b=>b.onclick=()=>{sel=b.dataset.id;render();});
+}
+function renderDetail(){
+ const d=D.find(x=>x.id===sel),t=T();
+ $('detail').innerHTML=`<div class="dh"><span class="big">${d.e}</span><div><h3>${L==='ru'?d.ru:d.de}</h3><p>${L==='ru'?d.dr:d.dd}</p></div>${d.u?`<span class="tag">${t.urgent}</span>`:''}</div>
+ <div class="db"><h4>${t.hdrSay}</h4><ul>${(L==='ru'?d.sr:d.sd).map(s=>`<li>${s}</li>`).join('')}</ul>
+ <h4>${t.hdrPhr}</h4>${d.p.map(p=>`<div class="ph"><div class="de">${esc(fill(p[0]))}</div><div class="ru">${esc(fill(p[1]))}</div></div>`).join('')}</div>`;
+}
+function script(){
+ const d=D.find(x=>x.id===sel),p=pers(),addr=$('address').value.trim(),fl=$('floor').value.trim(),c=$('caller').value.trim(),oth=$('other').value.trim();
+ const what=d.p.slice(0,2);
+ const de=[];const ru=[];
+ de.push(UI.de.hi+(c?`mein Name ist ${c}. `:'')+UI.de.n+' '+UI.de.need);
+ ru.push(UI.ru.hi+(c?`меня зовут ${c}. `:'')+UI.ru.n+' '+UI.ru.need);
+ de.push(addr?`Die Adresse ist ${addr}${fl?', '+fl:''}.`:'Die Adresse nenne ich gleich.');
+ ru.push(addr?`Адрес: ${addr}${fl?', этаж '+fl:''}.`:'Сейчас назову адрес.');
+ what.forEach(w=>{de.push(fill(w[0]));ru.push(fill(w[1]));});
+ const a=$('age').value.trim(),b=$('birth').value.trim(),m=$('meds').value.trim(),ph=$('phone').value.trim();
+ if(a||b){de.push(`Alter: ${a||'?'}${b?', geboren '+b:''}.`);ru.push(`Возраст: ${a||'?'}${b?', дата рождения '+b:''}.`);}
+ if(m){de.push('Medikamente/Allergien: '+m+'.');ru.push('Лекарства/аллергии: '+m+'.');}
+ if(oth){de.push('Weitere Symptome: '+oth+'.');ru.push('Другие симптомы: '+oth+'.');}
+ if(ph){de.push('Rückrufnummer: '+ph+'.');ru.push('Номер для связи: '+ph+'.');}
+ de.push(UI.de.lowDe);ru.push(UI.ru.lowDe+' ('+UI.de.lowDe+')');
+ return{de:de.join(' '),ru:ru.join(' '),what:what.map(w=>fill(w[0])).join(' '),whatRu:what.map(w=>fill(w[1])).join(' ')};
+}
+function renderScript(){const s=script();$('sDe').textContent=s.de;$('sRu').textContent=s.ru;renderQ(s);}
+function renderQ(s){
+ const addr=$('address').value.trim()||(L==='ru'?'…':'…');
+ $('qs').innerHTML=UI.de.Q.map((q,i)=>{const r=UI.ru.Q[i];
+  const a=q[1].replace('{addr}',addr).replace('{what}',s.what),ar=r[1].replace('{addr}',addr).replace('{what}',s.whatRu);
+  return`<div class="q"><div class="de">${esc(q[0])}</div><div class="ru">${esc(r[0])}</div><div style="margin-top:6px;font-size:14px">→ ${esc(a)}<div class="ru">${esc(ar)}</div></div></div>`;}).join('');
+}
+function render(){renderSym();renderDetail();renderScript();}
+function toast(s){const e=$('toast');e.textContent=s;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',2200);}
+function save(){try{if($('remember').checked){const o={};FIELDS.forEach(f=>o[f]=$(f).value);o.L=L;localStorage.setItem(STORE,JSON.stringify(o));}else localStorage.removeItem(STORE);}catch(e){}}
+function load(){try{const o=JSON.parse(localStorage.getItem(STORE)||'null');if(o){FIELDS.forEach(f=>{if(o[f]!==undefined)$(f).value=o[f]});$('remember').checked=true;}
+ const l=o&&o.L||localStorage.getItem(STORE+'.lang');if(l==='de'||l==='ru')L=l;}catch(e){}}
+function fullText(){const s=script();return s.de+'\n\n'+s.ru;}
+$('lde').onclick=()=>{L='de';try{localStorage.setItem(STORE+'.lang','de')}catch(e){}applyUI();save();};
+$('lru').onclick=()=>{L='ru';try{localStorage.setItem(STORE+'.lang','ru')}catch(e){}applyUI();save();};
+[...FIELDS,'other'].forEach(f=>$(f).addEventListener('input',()=>{render();save();}));
+$('sex').addEventListener('change',()=>{render();save();});
+$('remember').addEventListener('change',save);
+$('copy').onclick=async()=>{const text=fullText();try{await navigator.clipboard.writeText(text);}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(_){}ta.remove();}toast(T().copied);};
+$('share').onclick=async()=>{const text=fullText();if(navigator.share){try{await navigator.share({text});toast(T().shared);}catch(e){}}else{try{await navigator.clipboard.writeText(text);}catch(e){}toast(T().noShare);}};
+$('print').onclick=()=>window.print();
+$('clear').onclick=()=>{FIELDS.forEach(f=>{$(f).value=f==='sex'?'n':''});$('other').value='';$('remember').checked=false;try{localStorage.removeItem(STORE)}catch(e){}render();toast(T().cleared);};
+$('gps').onclick=()=>{if(!navigator.geolocation){toast(T().gpsFail);return;}toast(T().gpsWait);
+ navigator.geolocation.getCurrentPosition(p=>{const c=p.coords.latitude.toFixed(5)+', '+p.coords.longitude.toFixed(5);const a=$('address');a.value=(a.value.trim()?a.value.trim()+' · ':'')+'GPS '+c;render();save();toast(T().gpsOk);},()=>toast(T().gpsFail),{enableHighAccuracy:true,timeout:10000,maximumAge:30000});};
+load();applyUI();
+</script>
+</body>
+</html>
